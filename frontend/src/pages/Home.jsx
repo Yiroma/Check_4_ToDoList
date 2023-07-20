@@ -2,6 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+import Edit from "../assets/edit.svg";
+import Delete from "../assets/delete.svg";
+import Add from "../assets/add.svg";
+import Checked from "../assets/checked.svg";
+import Save from "../assets/save.svg";
+
 function Home() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
@@ -48,12 +57,12 @@ function Home() {
     }
   };
 
-  const updateTask = (id, checked) => {
+  const updateTaskStatus = (id, checked) => {
     axios
-      .put(`${import.meta.env.VITE_BACKEND_URL}/${id}`, { checked })
+      .put(`${import.meta.env.VITE_BACKEND_URL}/${id}`, { checked: !checked })
       .then(() => {
         const updatedTasks = tasks.map((task) =>
-          task.id === id ? { ...task, checked } : task
+          task.id === id ? { ...task, checked: !checked } : task
         );
         setTasks(updatedTasks);
       })
@@ -103,49 +112,87 @@ function Home() {
   };
 
   return (
-    <div>
-      <h1>Todo List</h1>
-      <input
-        type="text"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-      />
-      <button type="button" onClick={addTask}>
-        Add Task
-      </button>
-      <ul>
+    <div className="home">
+      <Header />
+      <div className="addTaskContainer">
+        <input
+          type="text"
+          value={newTask}
+          placeholder="Ajouter une tache"
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button type="button" onClick={addTask}>
+          <img src={Add} alt="addTask" />
+        </button>
+      </div>
+
+      <ul className="taskContainer">
         {tasks.map((task) => (
-          <li key={task.id}>
-            <input
-              type="checkbox"
-              checked={task.checked}
-              onChange={(e) => updateTask(task.id, e.target.checked)}
-            />
+          <li
+            key={task.id}
+            style={{
+              backgroundColor: task.checked ? "#e7e7e780" : "#ffffff99",
+              color: task.checked ? "#a5a5a5" : "inherit",
+            }}
+          >
             {editingTaskId === task.id ? (
               <>
                 <input
                   type="text"
                   value={editingTaskDesc}
                   onChange={(e) => setEditingTaskDesc(e.target.value)}
+                  style={{
+                    backgroundColor: task.checked ? "#e7e7e780" : "#ffffff99",
+                    color: task.checked ? "#a5a5a5" : "inherit",
+                  }}
                 />
-                <button type="button" onClick={() => saveEditedTask(task)}>
-                  Save
-                </button>
+                <div className="btnCheckSaveContainer">
+                  <button
+                    type="button"
+                    onClick={() => updateTaskStatus(task.id, task.checked)}
+                    style={{
+                      backgroundColor: task.checked ? "#1ec41e9d" : "#ffffff99",
+                    }}
+                  >
+                    <img className="imgChecked" src={Checked} alt="checked" />
+                  </button>
+                  <button type="button" onClick={() => saveEditedTask(task)}>
+                    <img className="imgSave" src={Save} alt="save" />
+                  </button>
+                </div>
               </>
             ) : (
               <>
                 {task.desc}
-                <button type="button" onClick={() => editTask(task)}>
-                  Edit
-                </button>
-                <button type="button" onClick={() => deleteTask(task.id)}>
-                  Delete
-                </button>
+                <div className="btnEditDeleteContainer">
+                  <button
+                    className="btnEditDelete"
+                    type="button"
+                    style={{ display: task.checked ? "block" : "none" }}
+                  >
+                    <img className="imgChecked" src={Checked} alt="checked" />
+                  </button>
+                  <button
+                    className="btnEditDelete"
+                    type="button"
+                    onClick={() => editTask(task)}
+                  >
+                    <img src={Edit} alt="edit" />
+                  </button>
+                  <button
+                    className="btnEditDelete"
+                    type="button"
+                    onClick={() => deleteTask(task.id)}
+                  >
+                    <img src={Delete} alt="delete" />
+                  </button>
+                </div>
               </>
             )}
           </li>
         ))}
       </ul>
+      <Footer />
     </div>
   );
 }
