@@ -7,7 +7,11 @@ CREATE TABLE `tasks` (
 INSERT INTO `tasks`
 (`desc`, `checked`) 
 VALUES 
-('tache numero1', 1),
-('tache 2', 0),
-('refaire le crud', 1),
-('tadiiin', 0);
+('Reprendre le projet de 0', 1),
+('Faire une BDD', 1),
+('Faire le CRUD', 0),
+('Pleurer un peu', 1),
+('Relier Back et Front', 1),
+('Pleurer beaucoup', 0),
+('Faire le Front', 1),
+('Youpi FINI', 0);
