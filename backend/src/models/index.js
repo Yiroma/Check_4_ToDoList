@@ -29,11 +29,6 @@ pool.getConnection().catch(() => {
 
 const models = {};
 
-const ItemManager = require("./ItemManager");
-
-models.item = new ItemManager();
-models.item.setDatabase(pool);
-
 const TaskManager = require("./TaskManager");
 
 models.task = new TaskManager();

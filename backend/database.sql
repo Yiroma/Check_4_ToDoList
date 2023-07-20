@@ -10,8 +10,8 @@ VALUES
 ('Reprendre le projet de 0', 1),
 ('Faire une BDD', 1),
 ('Faire le CRUD', 0),
-('Pleurer un peu', 1),
+('Pleurer...', 1),
 ('Relier Back et Front', 1),
-('Pleurer beaucoup', 0),
+('Commander un corde à Anthony', 0),
 ('Faire le Front', 1),
 ('Youpi FINI', 0);
