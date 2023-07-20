@@ -48,18 +48,23 @@ const updateTask = (req, res) => {
 
   task.id = parseInt(req.params.id, 10);
 
-  const taskId = req.params.id;
-  const updatedTask = req.body;
+  if (!task.desc) {
+    res.status(200).json({ message: "Modification ok." });
+    return;
+  }
+
   models.task
-    .update(taskId, updatedTask)
-    .then(() => {
-      res.sendStatus(200);
+    .update(task)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
     })
     .catch((err) => {
       console.error(err);
-      res
-        .status(500)
-        .json({ error: "Erreur lors de la mise à jour de la tâche." });
+      res.sendStatus(500);
     });
 };
 

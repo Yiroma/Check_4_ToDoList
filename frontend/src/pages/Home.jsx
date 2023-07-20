@@ -6,7 +6,7 @@ function Home() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const [editingTaskDescription, setEditingTaskDescription] = useState("");
+  const [editingTaskDesc, setEditingTaskDesc] = useState("");
 
   const fetchTasks = () => {
     axios
@@ -26,8 +26,8 @@ function Home() {
   const addTask = async () => {
     const newTaskData = {
       id: uuidv4(),
-      description: newTask,
-      completed: false,
+      desc: newTask,
+      checked: false,
     };
 
     try {
@@ -44,16 +44,16 @@ function Home() {
     } catch (error) {
       console.error(error);
       setTasks(tasks.filter((task) => task.id !== newTaskData.id));
-      setNewTask(newTaskData.description);
+      setNewTask(newTaskData.desc);
     }
   };
 
-  const updateTask = (id, completed) => {
+  const updateTask = (id, checked) => {
     axios
-      .put(`${import.meta.env.VITE_BACKEND_URL}/${id}`, { completed })
+      .put(`${import.meta.env.VITE_BACKEND_URL}/${id}`, { checked })
       .then(() => {
         const updatedTasks = tasks.map((task) =>
-          task.id === id ? { ...task, completed } : task
+          task.id === id ? { ...task, checked } : task
         );
         setTasks(updatedTasks);
       })
@@ -64,14 +64,14 @@ function Home() {
 
   const editTask = (task) => {
     setEditingTaskId(task.id);
-    setEditingTaskDescription(task.description);
+    setEditingTaskDesc(task.desc);
   };
 
   const saveEditedTask = (task) => {
     const updatedTask = {
       id: task.id,
-      description: editingTaskDescription,
-      completed: task.completed,
+      desc: editingTaskDesc,
+      checked: task.checked,
     };
 
     axios
@@ -79,11 +79,11 @@ function Home() {
       .then(() => {
         setTasks(
           tasks.map((t) =>
-            t.id === task.id ? { ...t, description: editingTaskDescription } : t
+            t.id === task.id ? { ...t, desc: editingTaskDesc } : t
           )
         );
         setEditingTaskId(null);
-        setEditingTaskDescription("");
+        setEditingTaskDesc("");
       })
       .catch((error) => {
         console.error(error);
@@ -118,15 +118,15 @@ function Home() {
           <li key={task.id}>
             <input
               type="checkbox"
-              checked={task.completed}
+              checked={task.checked}
               onChange={(e) => updateTask(task.id, e.target.checked)}
             />
             {editingTaskId === task.id ? (
               <>
                 <input
                   type="text"
-                  value={editingTaskDescription}
-                  onChange={(e) => setEditingTaskDescription(e.target.value)}
+                  value={editingTaskDesc}
+                  onChange={(e) => setEditingTaskDesc(e.target.value)}
                 />
                 <button type="button" onClick={() => saveEditedTask(task)}>
                   Save
@@ -134,7 +134,7 @@ function Home() {
               </>
             ) : (
               <>
-                {task.description}
+                {task.desc}
                 <button type="button" onClick={() => editTask(task)}>
                   Edit
                 </button>
