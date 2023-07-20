@@ -121,7 +121,7 @@ function Home() {
           placeholder="Ajouter une tache"
           onChange={(e) => setNewTask(e.target.value)}
         />
-        <button type="button" onClick={addTask}>
+        <button className="btnAddTask" type="button" onClick={addTask}>
           <img src={Add} alt="addTask" />
         </button>
       </div>
@@ -133,6 +133,7 @@ function Home() {
             style={{
               backgroundColor: task.checked ? "#e7e7e780" : "#ffffff99",
               color: task.checked ? "#a5a5a5" : "inherit",
+              textDecoration: task.checked ? "line-through" : "inherit",
             }}
           >
             {editingTaskId === task.id ? (
@@ -144,6 +145,7 @@ function Home() {
                   style={{
                     backgroundColor: task.checked ? "#e7e7e780" : "#ffffff99",
                     color: task.checked ? "#a5a5a5" : "inherit",
+                    textDecoration: task.checked ? "line-through" : "inherit",
                   }}
                 />
                 <div className="btnCheckSaveContainer">
