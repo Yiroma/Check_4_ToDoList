@@ -31,7 +31,7 @@ const read = (req, res) => {
 const createTask = (req, res) => {
   const newTask = req.body;
   models.task
-    .insert(newTask) // Corrected line
+    .insert(newTask)
     .then((createdTask) => {
       res.status(201).json(createdTask);
     })

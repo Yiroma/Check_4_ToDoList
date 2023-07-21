@@ -13,10 +13,6 @@ class TaskManager extends AbstractManager {
   }
 
   update(task) {
-    console.warn("Updating task with ID:", task.id);
-    console.warn("New description:", task.desc);
-    console.warn("New checked status:", task.checked);
-
     return this.database.query(
       `update ${this.table} set \`desc\` = ?, checked = ? where id = ?`,
       [task.desc, task.checked, task.id]
