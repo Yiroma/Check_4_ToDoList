@@ -5,10 +5,10 @@ import { v4 as uuidv4 } from "uuid";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-import Edit from "../assets/edit.svg";
-import Delete from "../assets/delete.svg";
 import Add from "../assets/add.svg";
 import Checked from "../assets/checked.svg";
+import Delete from "../assets/delete.svg";
+import Edit from "../assets/edit.svg";
 import Save from "../assets/save.svg";
 
 function Home() {
@@ -114,6 +114,7 @@ function Home() {
   return (
     <div className="home">
       <Header />
+
       <div className="addTaskContainer">
         <input
           type="text"
@@ -148,6 +149,7 @@ function Home() {
                     textDecoration: task.checked ? "line-through" : "inherit",
                   }}
                 />
+
                 <div className="btnCheckSaveContainer">
                   <button
                     type="button"
@@ -158,6 +160,7 @@ function Home() {
                   >
                     <img className="imgChecked" src={Checked} alt="checked" />
                   </button>
+
                   <button type="button" onClick={() => saveEditedTask(task)}>
                     <img className="imgSave" src={Save} alt="save" />
                   </button>
@@ -174,6 +177,7 @@ function Home() {
                   >
                     <img className="imgChecked" src={Checked} alt="checked" />
                   </button>
+
                   <button
                     className="btnEditDelete"
                     type="button"
@@ -181,6 +185,7 @@ function Home() {
                   >
                     <img src={Edit} alt="edit" />
                   </button>
+
                   <button
                     className="btnEditDelete"
                     type="button"
@@ -194,6 +199,7 @@ function Home() {
           </li>
         ))}
       </ul>
+
       <Footer />
     </div>
   );
